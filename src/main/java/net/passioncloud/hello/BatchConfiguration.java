@@ -41,7 +41,7 @@ public class BatchConfiguration {
                 .names(new String[] { "firstName", "lastName", "emailAddress"})
                 .fieldSetMapper(new BeanWrapperFieldSetMapper<SampleMember>()
                 {{
-                    setTargetType(SampleMember.class);
+                    setTargetType(SampleMember.class); // remember to  ensure SampleMember has a no-arg constructor else you'll get an error.
                 }})
                 .build();
     }
@@ -57,7 +57,7 @@ public class BatchConfiguration {
         return new JdbcBatchItemWriterBuilder<SampleMember>()
                 .itemSqlParameterSourceProvider(
                         new BeanPropertyItemSqlParameterSourceProvider<>())
-                .sql("INSERT INTO sample_member(first_name, last_name, email_address) VALUES (:firstName, :lastName, :lastName)")
+                .sql("INSERT INTO sample_member(first_name, last_name, email_address) VALUES (:firstName, :lastName, :emailAddress)")
                 .dataSource(dataSource)
                 .build();
 
@@ -81,7 +81,7 @@ public class BatchConfiguration {
     public Step step1(JdbcBatchItemWriter<SampleMember> writer) {
         System.out.println("step1 called");
         return stepBuilderFactory.get("step1")
-                .<SampleMember, SampleMember> chunk(10)
+                .<SampleMember, SampleMember> chunk(3)
                 .reader(reader())
                 .processor(processor())
                 .writer(writer)

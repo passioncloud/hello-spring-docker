@@ -28,9 +28,9 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
             jdbcTemplate.query(
                     "SELECT * FROM sample_member",
                     (resultSet, row) -> new SampleMember(
-                            resultSet.getString(1),
                             resultSet.getString(2),
-                            resultSet.getString(3)
+                            resultSet.getString(3),
+                            resultSet.getString(4)
                     ))
                     .forEach(sampleMember -> log.info("Found " + sampleMember));
         }

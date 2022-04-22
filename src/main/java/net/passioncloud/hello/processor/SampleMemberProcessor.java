@@ -13,7 +13,7 @@ public class SampleMemberProcessor implements ItemProcessor<SampleMember, Sample
     public SampleMember process(final SampleMember sampleMember) throws Exception {
         // Make names capitalized
         final String firstName = sampleMember.getFirstName().toUpperCase();
-        final String lastName = sampleMember.getLastName().toUpperCase();
+        final String lastName = sampleMember.getLastName().toLowerCase();
         final SampleMember transformedSampleMember = new SampleMember(firstName, lastName, sampleMember.getEmailAddress());
         return transformedSampleMember;
     }
